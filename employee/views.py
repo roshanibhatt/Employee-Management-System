@@ -31,7 +31,6 @@ def register_view(request):
         if pwd1!=pwd2:
             messages.error(request, "Password and confirm password are not the same.")
             return redirect('register')
-
         
         else:
             my_user=User.objects.create_user(uname,email,pwd1)
@@ -43,4 +42,19 @@ def register_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def all_emp(request):
+    return render(request,'all_emp.html')
+
+
+def add_emp(request):
+    return render(request,'add_emp.html')
+
+
+def remove_emp(request):
+    return render(request,'remove_emp.html')
+
+
+def filter_emp(request):
+    return render(request,'filter_emp.html')
     

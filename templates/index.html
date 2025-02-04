@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 
 {% block body %}
+<div class="container-fluid my-4">
+    <h1>Employee Management System</h1>
+    <a class="btn btn-primary" href="{% url 'all_emp' %}">View all Employee</a>
+    <a class="btn btn-primary" href="{% url 'add_emp' %}">Add an Employee</a>
+    <a class="btn btn-primary" href="{% url 'remove_emp' %}">Remove an Employee</a>
+    <a class="btn btn-primary" href="{% url 'filter_emp' %}">Filter Employee Detail</a>
+    <a href="{% url 'logout' %}"  style="background-color: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Logout</a> 
+</div>
 
-<h2>hello world</h2> 
-<a href="{% url 'logout' %}"  style="background-color: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Logout</a>
+
 {% endblock body %}
 
 
