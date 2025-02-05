@@ -1,8 +1,10 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
+from . models import Employee,Role,Department
+from datetime import datetime
 
 # Create your views here.
 def home(request):
@@ -30,8 +32,6 @@ def register_view(request):
         pwd2=request.POST.get('password2')
         if pwd1!=pwd2:
             messages.error(request, "Password and confirm password are not the same.")
-            return redirect('register')
-        
         else:
             my_user=User.objects.create_user(uname,email,pwd1)
             my_user.save()
@@ -44,17 +44,37 @@ def logout_view(request):
     return redirect('login')
 
 def all_emp(request):
-    return render(request,'all_emp.html')
+    employee=Employee.objects.all()
+    context={
+        'employee':employee
+    }
+    return render(request,'all_emp.html',context)
 
 
 def add_emp(request):
-    return render(request,'add_emp.html')
+    if request.method=="POST":
+        first_name=request.POST['first_name']
+        last_name=request.POST['last_name']
+        salary=int(request.POST['salary'])
+        phone=int(request.POST['phone'])
+        dept=int(request.POST['dept'])
+        role=int(request.POST['role'])
+        bonus=int(request.POST['bonus'])
+        new_emp=Employee(first_name=first_name,last_name=last_name,salary=salary,phone=phone,dept_id=dept,role_id=role,bonus=bonus,hire_date=datetime.now)
+        new_emp.save()
+        return HttpResponse("Employee added successfully")
+    elif request.method=="GET":
+         return render(request,'add_emp.html')
 
-
+    else:
+        return HttpResponse("an exception occured! employee has not been added")    
+       
 def remove_emp(request):
     return render(request,'remove_emp.html')
 
 
 def filter_emp(request):
     return render(request,'filter_emp.html')
+
+
     
